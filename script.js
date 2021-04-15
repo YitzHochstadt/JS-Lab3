@@ -25,82 +25,102 @@ let submissions = [
         passed: true
     }
 ];
-console.log(submissions);
 /*** 2 ***/
 function addSubmission(array, newName, newScore, newDate){
-    if (newScore >= 60){
-        boolean = true;
-    } else {
-        boolean = false;
-    }
+    let ifPassed;
+        if (newScore >= 60){
+            ifPassed = true;
+        } else {
+            ifPassed = false;
+        }
     array.push({
         name: newName,
         score: newScore,
         date: newDate,
-        passed: boolean,
+        passed: ifPassed,
     })
         
 }
 addSubmission(submissions, "Bob",57,"2020-03-03");
+addSubmission(submissions, "Jimmie", 98, "2020-04-03")
 console.log(submissions);
 /*** 3 ***/
 function deleteSubmissionByIndex(array, index){
     array.splice(index, 1);
 }
 deleteSubmissionByIndex(submissions, 0);
-console.log(submissions);
 /*** 4 ***/
 function deleteSubmissionByName(array, name){
-    array.splice(name, 1);
+    const nameIndex = array.findIndex( (submission) => submission.name === name);
+    array.splice(nameIndex, 1);
 }
-deleteSubmissionByName(submissions, "Joe");
+deleteSubmissionByName(submissions, "Jack");
 console.log(submissions);
 /*** 5 ***/
 function editSubmission(array, index, score){
     let submission = array[index];
     submission.score = score;
-    if (score >= 60){
-        boolean = true;
-    } else {
-        boolean = false;
-    }
+    submission.passed = score >=60 ? true : false;
 }
-editSubmission(submissions, 0, 100);
-console.log(submissions);
+console.log(editSubmission(submissions, 2, 100));
 /*** 6 ***/
 function findSubmissionByName(array, name){
-    const found = array.find(arrayItem => arrayItem.name === name);
-    console.log(found);
+    const foundSubmission = array.find(submission => submission.name === name);
+    return foundSubmission;
 }
-findSubmissionByName(submissions, "Jill");
+console.log(findSubmissionByName(submissions, "Jill"));
 /*** 7 ***/
 function findLowestScore(array){
-    const lowest = array.forEach(arrayItem => arrayItem.score < arrayItem.score);
-    console.log(lowest);
+    let lowest = array[0];
+    array.forEach(function (submission) {
+        if (lowest.score > submission.score){
+            lowest = submission;
+        }
+    });
+    return lowest;
 }
 findLowestScore(submissions);
-// 7. Declare a function named findLowestScore
-// ○ Parameter(s): array
-// ○ Functionality: return the object in the array that has the lowest score. Use the
-// forEach method to loop through the whole array
+
 /*** 8 ***/
 function findAverageScore(array){
     let total = 0;
-    for (arrayItem of array){
-    total += arrayItem.score
+    let average;
+    for (submission of array){
+    total += submission.score
     }
-    console.log(total / array.length);
+    average = (total / array.length);
+    return average;
 }
 findAverageScore(submissions);
 /*** 9 ***/
 function filterPassing(array){
-    const passing = array.filter(arrayItem => arrayItem.passed === true)
-    console.log(passing);
+    const passing = array.filter(submission => submission.passed);
+    return passing;
 }
 filterPassing(submissions);
 /*** 10 ***/
 function filter90AndAbove(array){
-    const honorRole = array.filter(arrayItem => arrayItem.score > 90);
-    console.log(honorRole);
+    const honorRole = array.filter(submission => submission.score >= 90);
+    return honorRole;
 }
 filter90AndAbove(submissions);
+
+
+// *** HOW TO WORD IT? ***
+function filterByName(array, name) {
+    // Filter the array, include each element where the element name is equal to name.
+    return array.filter(element => element.name === name);
+  }
+  function findLargeSize(array) {
+    // Find in the array, choose the element where the element size is greater than 10.
+    return array.find(element => element.size > 10);
+  }
+  function findAverageSize(array) {
+    let sum = 0;
+    // loop through each element in the array, one by one
+    for (let element of array) {
+      // add the current element's size to the sum
+      sum += element.size;
+    }
+    return sum / array.length;
+  }
